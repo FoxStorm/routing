@@ -1,0 +1,37 @@
+{
+  "name": "foxstorm-routing",
+  "version": "0.1.0",
+  "description": "🚀 Router",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FoxStorm/server"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint --project ./ --exclude \"node_modules/*/**.ts\"",
+    "test": "mocha --require ts-node/register src/tests/**/*"
+  },
+  "keywords": [
+    "router",
+    "foxstorm"
+  ],
+  "author": "Sebastian - Corneliu Vîrlan",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/express": "^4.16.1",
+    "@types/mocha": "^5.2.5",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.12.0",
+    "tslint-config-standard": "^8.0.1",
+    "tslint-immutable": "^5.0.1",
+    "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "foxstorm-debuggable": "git+https://git@github.com/FoxStorm/debuggable.git"
+  }
+}
