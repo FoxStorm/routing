@@ -1,19 +1,41 @@
-import * as express from 'express';
-export interface Request extends express.Request {
-}
-export interface Response extends express.Response {
-}
-interface ApplicationRouter {
-    get(endpoint: string, controller: (req: Request, res: Response) => void | InvokableController): void;
-}
-declare type InvokableController = {
+import { ControllerResolvable } from './ControllerResolver/ControllerResolvable';
+import { Response } from './Response';
+import { Request } from './Request';
+export declare type RequestHandler = {
+    (req: Request, res: Response): void;
+};
+declare type RequestHandler = {
+    (req: Request, res: Response): void | InvokableController;
+};
+export declare type InvokableController = {
     readonly __invoke: (req: Request, res: Response) => void;
 };
+interface ApplicationRouter {
+    get(endpoint: any, controller?: (req: Request, res: Response) => void | InvokableController): void;
+    post(endpoint: any, controller?: (req: Request, res: Response) => void | InvokableController): void;
+    put(endpoint: any, controller?: (req: Request, res: Response) => void | InvokableController): void;
+    delete(endpoint: any, controller?: (req: Request, res: Response) => void | InvokableController): void;
+    resource(model: any): Promise<void>;
+}
+interface Logger {
+    log(message: string): void;
+}
 export declare const __invoke: (controller: any) => (req: Request, res: Response) => void;
 export declare class Router implements ApplicationRouter {
-    readonly router: import("express-serve-static-core").Router;
-    constructor(router?: import("express-serve-static-core").Router);
-    get(endpoint: string, controller: (req: Request, res: Response) => void | InvokableController): void;
-    private retrieveAction;
+    private readonly logger;
+    readonly router: any;
+    private readonly routerCrudMap;
+    private readonly controllerResolver;
+    constructor(logger: Logger, router?: any, routerCrudMap?: {
+        readonly [index: string]: {
+            readonly action: string;
+            route: string;
+        };
+    }, controllerResolver?: ControllerResolvable);
+    get(path: string, requestHandler: RequestHandler): Promise<void>;
+    post(path: string, requestHandler: RequestHandler): Promise<void>;
+    put(path: string, requestHandler: RequestHandler): Promise<void>;
+    delete(path: string, requestHandler: RequestHandler): Promise<void>;
+    resource<T>(model: new () => T): Promise<void>;
 }
 export {};
