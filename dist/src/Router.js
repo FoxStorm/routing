@@ -30,7 +30,7 @@ class Router {
         this.router = router;
         this.routerCrudMap = routerCrudMap;
         this.controllerResolver = controllerResolver;
-        this.logger('Router initialized');
+        this.logger(`\n ${'*'.repeat(10)} Router Initialized ${'*'.repeat(10)}`);
     }
     get(path, requestHandler) {
         return __awaiter(this, void 0, void 0, function* () {
