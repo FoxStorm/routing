@@ -25,7 +25,7 @@ interface ApplicationRouter {
 }
 
 interface Logger {
-  print (message: string): void
+  (message: string): void
 }
 
 // export type Crud = {
@@ -52,27 +52,32 @@ export class Router implements ApplicationRouter {
     private readonly controllerResolver: ControllerResolvable = new ControllerResolver(
       Object.keys(routerCrudMap).map(key => routerCrudMap[key].action)
     )
-  ) {}
+  ) {
+    this.logger('Router initialized')
+  }
 
   async get (path: string, requestHandler: RequestHandler) {
     const controllerAction = this.controllerResolver.retrieveAction(requestHandler)
     this.router.get(path, controllerAction)
-    this.logger.print(`Registered route: ${path}`)
+    this.logger(`-- Registered GET route ${path}`)
   }
 
   async post (path: string, requestHandler: RequestHandler) {
     const controllerAction = this.controllerResolver.retrieveAction(requestHandler)
     this.router.post(path, controllerAction)
+    this.logger(`-- Registered POST route ${path}`)
   }
 
   async put (path: string, requestHandler: RequestHandler) {
     const controllerAction = this.controllerResolver.retrieveAction(requestHandler)
     this.router.get(path, controllerAction)
+    this.logger(`-- Registered PUT route ${path}`)
   }
 
   async delete (path: string, requestHandler: RequestHandler) {
     const controllerAction = this.controllerResolver.retrieveAction(requestHandler)
     this.router.get(path, controllerAction)
+    this.logger(`-- Registered DELETE route ${path}`)
   }
 
   async resource<T> (model: new () => T) {
@@ -83,7 +88,7 @@ export class Router implements ApplicationRouter {
       for (const method in this.routerCrudMap) {
         const config = this.routerCrudMap[method]
         this.router[method](config.route.replace('%model%', modelName), controllerInstance[config.action])
-        this.logger.print(`Registered route: ${config.route.replace('%model%', modelName)}`)
+        this.logger(`-- Registered route ${config.action} ${config.route.replace('%model%', modelName)}`)
       }
       // this.router.get(`/${modelName}`, controllerInstance.index)
       // this.router.post(`/${modelName}`, controllerInstance.create)

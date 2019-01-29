@@ -30,30 +30,34 @@ class Router {
         this.router = router;
         this.routerCrudMap = routerCrudMap;
         this.controllerResolver = controllerResolver;
+        this.logger('Router initialized');
     }
     get(path, requestHandler) {
         return __awaiter(this, void 0, void 0, function* () {
             const controllerAction = this.controllerResolver.retrieveAction(requestHandler);
             this.router.get(path, controllerAction);
-            this.logger.print(`Registered route: ${path}`);
+            this.logger(`-- Registered GET route ${path}`);
         });
     }
     post(path, requestHandler) {
         return __awaiter(this, void 0, void 0, function* () {
             const controllerAction = this.controllerResolver.retrieveAction(requestHandler);
             this.router.post(path, controllerAction);
+            this.logger(`-- Registered POST route ${path}`);
         });
     }
     put(path, requestHandler) {
         return __awaiter(this, void 0, void 0, function* () {
             const controllerAction = this.controllerResolver.retrieveAction(requestHandler);
             this.router.get(path, controllerAction);
+            this.logger(`-- Registered PUT route ${path}`);
         });
     }
     delete(path, requestHandler) {
         return __awaiter(this, void 0, void 0, function* () {
             const controllerAction = this.controllerResolver.retrieveAction(requestHandler);
             this.router.get(path, controllerAction);
+            this.logger(`-- Registered DELETE route ${path}`);
         });
     }
     resource(model) {
@@ -64,7 +68,7 @@ class Router {
                 for (const method in this.routerCrudMap) {
                     const config = this.routerCrudMap[method];
                     this.router[method](config.route.replace('%model%', modelName), controllerInstance[config.action]);
-                    this.logger.print(`Registered route: ${config.route.replace('%model%', modelName)}`);
+                    this.logger(`-- Registered route ${config.action} ${config.route.replace('%model%', modelName)}`);
                 }
                 // this.router.get(`/${modelName}`, controllerInstance.index)
                 // this.router.post(`/${modelName}`, controllerInstance.create)
