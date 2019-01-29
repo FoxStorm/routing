@@ -25,7 +25,7 @@ interface ApplicationRouter {
 }
 
 interface Logger {
-  info (message: string): void
+  print (message: string): void
 }
 
 // export type Crud = {
@@ -57,7 +57,7 @@ export class Router implements ApplicationRouter {
   async get (path: string, requestHandler: RequestHandler) {
     const controllerAction = this.controllerResolver.retrieveAction(requestHandler)
     this.router.get(path, controllerAction)
-    this.logger.info(`Registered route: ${path}`)
+    this.logger.print(`Registered route: ${path}`)
   }
 
   async post (path: string, requestHandler: RequestHandler) {
@@ -83,7 +83,7 @@ export class Router implements ApplicationRouter {
       for (const method in this.routerCrudMap) {
         const config = this.routerCrudMap[method]
         this.router[method](config.route.replace('%model%', modelName), controllerInstance[config.action])
-        this.logger.info(`Registered route: ${config.route.replace('%model%', modelName)}`)
+        this.logger.print(`Registered route: ${config.route.replace('%model%', modelName)}`)
       }
       // this.router.get(`/${modelName}`, controllerInstance.index)
       // this.router.post(`/${modelName}`, controllerInstance.create)

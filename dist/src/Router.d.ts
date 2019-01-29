@@ -18,7 +18,7 @@ interface ApplicationRouter {
     resource(model: any): Promise<void>;
 }
 interface Logger {
-    info(message: string): void;
+    print(message: string): void;
 }
 export declare const __invoke: (controller: any) => (req: Request, res: Response) => void;
 export declare class Router implements ApplicationRouter {
