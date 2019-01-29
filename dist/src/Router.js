@@ -20,7 +20,7 @@ exports.__invoke = (controller) => {
     return controller.__invoke;
 };
 class Router {
-    constructor(logger, router = express(), routerCrudMap = {
+    constructor(logger, router = express.Router(), routerCrudMap = {
         'get': { action: 'index', route: `/%model%` },
         'post': { action: 'create', route: `/%model%` },
         'put': { action: 'update', route: `/%model%/:id` },
@@ -35,7 +35,7 @@ class Router {
         return __awaiter(this, void 0, void 0, function* () {
             const controllerAction = this.controllerResolver.retrieveAction(requestHandler);
             this.router.get(path, controllerAction);
-            this.logger.log(`Registered route: ${path}`);
+            this.logger.info(`Registered route: ${path}`);
         });
     }
     post(path, requestHandler) {
@@ -64,7 +64,7 @@ class Router {
                 for (const method in this.routerCrudMap) {
                     const config = this.routerCrudMap[method];
                     this.router[method](config.route.replace('%model%', modelName), controllerInstance[config.action]);
-                    this.logger.log(`Registered route: ${config.route.replace('%model%', modelName)}`);
+                    this.logger.info(`Registered route: ${config.route.replace('%model%', modelName)}`);
                 }
                 // this.router.get(`/${modelName}`, controllerInstance.index)
                 // this.router.post(`/${modelName}`, controllerInstance.create)

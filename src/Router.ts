@@ -25,7 +25,7 @@ interface ApplicationRouter {
 }
 
 interface Logger {
-  log (message: string): void
+  info (message: string): void
 }
 
 // export type Crud = {
@@ -42,7 +42,7 @@ export const __invoke = (controller: any) => { // tslint:disable-line
 export class Router implements ApplicationRouter {
   constructor (
     private readonly logger: Logger,
-    readonly router: any = express(),
+    readonly router: any = express.Router(),
     private readonly routerCrudMap: { readonly [index: string] : { readonly action: string, route: string} } = {
       'get': { action: 'index', route: `/%model%` },
       'post': { action: 'create', route: `/%model%` },
@@ -57,7 +57,7 @@ export class Router implements ApplicationRouter {
   async get (path: string, requestHandler: RequestHandler) {
     const controllerAction = this.controllerResolver.retrieveAction(requestHandler)
     this.router.get(path, controllerAction)
-    this.logger.log(`Registered route: ${path}`)
+    this.logger.info(`Registered route: ${path}`)
   }
 
   async post (path: string, requestHandler: RequestHandler) {
@@ -83,7 +83,7 @@ export class Router implements ApplicationRouter {
       for (const method in this.routerCrudMap) {
         const config = this.routerCrudMap[method]
         this.router[method](config.route.replace('%model%', modelName), controllerInstance[config.action])
-        this.logger.log(`Registered route: ${config.route.replace('%model%', modelName)}`)
+        this.logger.info(`Registered route: ${config.route.replace('%model%', modelName)}`)
       }
       // this.router.get(`/${modelName}`, controllerInstance.index)
       // this.router.post(`/${modelName}`, controllerInstance.create)
