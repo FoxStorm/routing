@@ -53,7 +53,7 @@ export class Router implements ApplicationRouter {
       Object.keys(routerCrudMap).map(key => routerCrudMap[key].action)
     )
   ) {
-    this.logger(`\n ${'*'.repeat(10)} Router Initialized ${'*'.repeat(10)}`)
+    this.logger(`\n ${'*'.repeat(10)} Router Initialized ${'*'.repeat(10)} \n`)
   }
 
   async get (path: string, requestHandler: RequestHandler) {
