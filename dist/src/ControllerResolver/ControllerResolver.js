@@ -31,7 +31,7 @@ class ControllerResolver {
             const modelName = model.name;
             const controllerName = `${modelName}sController`;
             try {
-                const controller = yield Promise.resolve().then(() => require(`../example/${controllerName}`));
+                const controller = yield Promise.resolve().then(() => require(`${process.cwd()}/http/controllers/${controllerName}`));
                 const constructorName = Object.keys(controller)[0];
                 const controllerInstance = new controller[constructorName]();
                 this.crudActions.forEach(action => {

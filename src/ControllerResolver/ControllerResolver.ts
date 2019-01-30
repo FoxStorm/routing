@@ -29,7 +29,7 @@ export class ControllerResolver implements ControllerResolvable {
     const controllerName = `${modelName}sController`
 
     try {
-      const controller: any = await import(`../example/${controllerName}`)
+      const controller: any = await import(`${process.cwd()}/http/controllers/${controllerName}`)
       const constructorName = Object.keys(controller)[0]
 
       const controllerInstance = new controller[constructorName]()
