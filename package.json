@@ -2,7 +2,8 @@
   "name": "foxstorm-routing",
   "version": "0.1.0",
   "description": "🚀 Router",
-  "main": "dist/index.js",
+  "main": "dist/index",
+  "typings": "dist/index",
   "repository": {
     "type": "git",
     "url": "https://github.com/FoxStorm/server"
