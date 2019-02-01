@@ -68,7 +68,7 @@ class Router {
                 for (const method in this.routerCrudMap) {
                     const config = this.routerCrudMap[method];
                     this.router[method](config.route.replace('%model%', modelName), controllerInstance[config.action]);
-                    this.logger(`-- Registered route ${config.action} ${config.route.replace('%model%', modelName)}`);
+                    this.logger(`-- Registered ${method.toUpperCase()} route ${config.route.replace('%model%', modelName)}`);
                 }
                 // this.router.get(`/${modelName}`, controllerInstance.index)
                 // this.router.post(`/${modelName}`, controllerInstance.create)
