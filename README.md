@@ -1,4 +1,4 @@
-# FoxStorm Router
+# FoxStorm Router Service
 
 <p align="center">
   <b>Component of</b>
