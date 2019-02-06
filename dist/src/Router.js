@@ -32,33 +32,30 @@ class Router {
         this.controllerResolver = controllerResolver;
         this.logger(`\n ${'*'.repeat(10)} Router Initialized ${'*'.repeat(10)} \n`);
     }
+    root(requestHandler) {
+        const controllerAction = this.controllerResolver.retrieveAction(requestHandler);
+        this.router.get('/', controllerAction);
+        this.logger(`-- Registered GET route /`);
+    }
     get(path, requestHandler) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const controllerAction = this.controllerResolver.retrieveAction(requestHandler);
-            this.router.get(path, controllerAction);
-            this.logger(`-- Registered GET route ${path}`);
-        });
+        const controllerAction = this.controllerResolver.retrieveAction(requestHandler);
+        this.router.get(path, controllerAction);
+        this.logger(`-- Registered GET route ${path}`);
     }
     post(path, requestHandler) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const controllerAction = this.controllerResolver.retrieveAction(requestHandler);
-            this.router.post(path, controllerAction);
-            this.logger(`-- Registered POST route ${path}`);
-        });
+        const controllerAction = this.controllerResolver.retrieveAction(requestHandler);
+        this.router.post(path, controllerAction);
+        this.logger(`-- Registered POST route ${path}`);
     }
     put(path, requestHandler) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const controllerAction = this.controllerResolver.retrieveAction(requestHandler);
-            this.router.get(path, controllerAction);
-            this.logger(`-- Registered PUT route ${path}`);
-        });
+        const controllerAction = this.controllerResolver.retrieveAction(requestHandler);
+        this.router.get(path, controllerAction);
+        this.logger(`-- Registered PUT route ${path}`);
     }
     delete(path, requestHandler) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const controllerAction = this.controllerResolver.retrieveAction(requestHandler);
-            this.router.get(path, controllerAction);
-            this.logger(`-- Registered DELETE route ${path}`);
-        });
+        const controllerAction = this.controllerResolver.retrieveAction(requestHandler);
+        this.router.get(path, controllerAction);
+        this.logger(`-- Registered DELETE route ${path}`);
     }
     resource(model) {
         return __awaiter(this, void 0, void 0, function* () {

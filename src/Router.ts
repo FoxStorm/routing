@@ -21,7 +21,7 @@ interface ApplicationRouter {
   post (endpoint: any, controller?: (req: Request, res: Response) => void | InvokableController): void
   put (endpoint: any, controller?: (req: Request, res: Response) => void | InvokableController): void
   delete (endpoint: any, controller?: (req: Request, res: Response) => void | InvokableController): void
-  resource(model: any): Promise<void>
+  resource (model: any): Promise<void>
 }
 
 interface Logger {
@@ -56,25 +56,31 @@ export class Router implements ApplicationRouter {
     this.logger(`\n ${'*'.repeat(10)} Router Initialized ${'*'.repeat(10)} \n`)
   }
 
-  async get (path: string, requestHandler: RequestHandler) {
+  root (requestHandler: RequestHandler) {
+    const controllerAction = this.controllerResolver.retrieveAction(requestHandler)
+    this.router.get('/', controllerAction)
+    this.logger(`-- Registered GET route /`)
+  }
+
+  get (path: string, requestHandler: RequestHandler) {
     const controllerAction = this.controllerResolver.retrieveAction(requestHandler)
     this.router.get(path, controllerAction)
     this.logger(`-- Registered GET route ${path}`)
   }
 
-  async post (path: string, requestHandler: RequestHandler) {
+  post (path: string, requestHandler: RequestHandler) {
     const controllerAction = this.controllerResolver.retrieveAction(requestHandler)
     this.router.post(path, controllerAction)
     this.logger(`-- Registered POST route ${path}`)
   }
 
-  async put (path: string, requestHandler: RequestHandler) {
+  put (path: string, requestHandler: RequestHandler) {
     const controllerAction = this.controllerResolver.retrieveAction(requestHandler)
     this.router.get(path, controllerAction)
     this.logger(`-- Registered PUT route ${path}`)
   }
 
-  async delete (path: string, requestHandler: RequestHandler) {
+  delete (path: string, requestHandler: RequestHandler) {
     const controllerAction = this.controllerResolver.retrieveAction(requestHandler)
     this.router.get(path, controllerAction)
     this.logger(`-- Registered DELETE route ${path}`)

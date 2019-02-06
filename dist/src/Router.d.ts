@@ -32,10 +32,11 @@ export declare class Router implements ApplicationRouter {
             route: string;
         };
     }, controllerResolver?: ControllerResolvable);
-    get(path: string, requestHandler: RequestHandler): Promise<void>;
-    post(path: string, requestHandler: RequestHandler): Promise<void>;
-    put(path: string, requestHandler: RequestHandler): Promise<void>;
-    delete(path: string, requestHandler: RequestHandler): Promise<void>;
+    root(requestHandler: RequestHandler): void;
+    get(path: string, requestHandler: RequestHandler): void;
+    post(path: string, requestHandler: RequestHandler): void;
+    put(path: string, requestHandler: RequestHandler): void;
+    delete(path: string, requestHandler: RequestHandler): void;
     resource<T>(model: new () => T): Promise<void>;
 }
 export {};
