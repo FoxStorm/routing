@@ -17,6 +17,7 @@ export type InvokableController = {
 }
 
 export interface Routing {
+  readonly router: any
   root (requestHandler: RequestHandler): void
   get (endpoint: any, controller?: (req: Request, res: Response) => void | InvokableController): void
   post (endpoint: any, controller?: (req: Request, res: Response) => void | InvokableController): void
