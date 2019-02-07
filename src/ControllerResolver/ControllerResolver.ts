@@ -1,5 +1,5 @@
 import { RoutingError } from '../RoutingError'
-import { InvokableController } from '../Router'
+import { InvokableController } from '../FoxStormRouter'
 import { ControllerResolvable } from './ControllerResolvable'
 import { Response } from '../Response'
 import { Request } from '../Request'

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Router_1 = require("./src/Router");
-exports.Router = Router_1.Router;
-exports.__invoke = Router_1.__invoke;
+var FoxStormRouter_1 = require("./src/FoxStormRouter");
+exports.FoxStormRouter = FoxStormRouter_1.FoxStormRouter;
+exports.__invoke = FoxStormRouter_1.__invoke;
 //# sourceMappingURL=index.js.map

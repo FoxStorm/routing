@@ -19,7 +19,7 @@ const ControllerResolver_1 = require("./ControllerResolver/ControllerResolver");
 exports.__invoke = (controller) => {
     return controller.__invoke;
 };
-class Router {
+class FoxStormRouter {
     constructor(logger, router = express.Router(), routerCrudMap = {
         'get': { action: 'index', route: `/%model%` },
         'post': { action: 'create', route: `/%model%` },
@@ -78,5 +78,5 @@ class Router {
         });
     }
 }
-exports.Router = Router;
-//# sourceMappingURL=Router.js.map
+exports.FoxStormRouter = FoxStormRouter;
+//# sourceMappingURL=FoxStormRouter.js.map

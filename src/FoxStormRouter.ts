@@ -16,7 +16,8 @@ export type InvokableController = {
   readonly __invoke: (req: Request, res: Response) => void
 }
 
-interface ApplicationRouter {
+interface Routing {
+  root (requestHandler: RequestHandler): void
   get (endpoint: any, controller?: (req: Request, res: Response) => void | InvokableController): void
   post (endpoint: any, controller?: (req: Request, res: Response) => void | InvokableController): void
   put (endpoint: any, controller?: (req: Request, res: Response) => void | InvokableController): void
@@ -39,11 +40,11 @@ export const __invoke = (controller: any) => { // tslint:disable-line
   return (controller as InvokableController).__invoke
 }
 
-export class Router implements ApplicationRouter {
+export class FoxStormRouter implements Routing {
   constructor (
     private readonly logger: Logger,
     readonly router: any = express.Router(),
-    private readonly routerCrudMap: { readonly [index: string] : { readonly action: string, route: string} } = {
+    private readonly routerCrudMap: { readonly [index: string]: { readonly action: string, readonly route: string} } = {
       'get': { action: 'index', route: `/%model%` },
       'post': { action: 'create', route: `/%model%` },
       'put': { action: 'update', route: `/%model%/:id` },

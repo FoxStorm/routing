@@ -10,7 +10,8 @@ declare type RequestHandler = {
 export declare type InvokableController = {
     readonly __invoke: (req: Request, res: Response) => void;
 };
-interface ApplicationRouter {
+interface Routing {
+    root(requestHandler: RequestHandler): void;
     get(endpoint: any, controller?: (req: Request, res: Response) => void | InvokableController): void;
     post(endpoint: any, controller?: (req: Request, res: Response) => void | InvokableController): void;
     put(endpoint: any, controller?: (req: Request, res: Response) => void | InvokableController): void;
@@ -21,7 +22,7 @@ interface Logger {
     (message: string): void;
 }
 export declare const __invoke: (controller: any) => (req: Request, res: Response) => void;
-export declare class Router implements ApplicationRouter {
+export declare class FoxStormRouter implements Routing {
     private readonly logger;
     readonly router: any;
     private readonly routerCrudMap;
@@ -29,7 +30,7 @@ export declare class Router implements ApplicationRouter {
     constructor(logger: Logger, router?: any, routerCrudMap?: {
         readonly [index: string]: {
             readonly action: string;
-            route: string;
+            readonly route: string;
         };
     }, controllerResolver?: ControllerResolvable);
     root(requestHandler: RequestHandler): void;

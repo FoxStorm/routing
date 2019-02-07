@@ -1,4 +1,4 @@
-import { InvokableController } from '../Router';
+import { InvokableController } from '../FoxStormRouter';
 import { Response } from '../Response';
 import { Request } from '../Request';
 export interface ControllerResolvable {
