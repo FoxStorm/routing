@@ -32,7 +32,9 @@
     "typescript": "^3.2.2"
   },
   "dependencies": {
+    "@types/pluralize": "0.0.29",
     "express": "^4.16.4",
-    "foxstorm-debuggable": "git+https://git@github.com/FoxStorm/debuggable.git"
+    "foxstorm-debuggable": "git+https://git@github.com/FoxStorm/debuggable.git",
+    "pluralize": "^7.0.0"
   }
 }

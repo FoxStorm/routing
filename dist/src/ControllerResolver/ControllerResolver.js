@@ -10,7 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const RoutingError_1 = require("../RoutingError");
 class ControllerResolver {
-    constructor(crudActions) {
+    constructor(pluralise, crudActions) {
+        this.pluralise = pluralise;
         this.crudActions = crudActions;
     }
     retrieveAction(controller) {
@@ -23,13 +24,9 @@ class ControllerResolver {
         }
         throw new RoutingError_1.RoutingError('Invalid route', 'Invalid Controller or Controller action passed');
     }
-    retrieveControllerInstanceFromModel(model) {
+    retrieveControllerInstanceFromModelName(modelName) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (typeof model !== 'function') {
-                throw new Error('Model has to be a valid class');
-            }
-            const modelName = model.name;
-            const controllerName = `${modelName}sController`;
+            const controllerName = `${this.pluralise(modelName)}Controller`;
             try {
                 const controller = yield Promise.resolve().then(() => require(`${process.cwd()}/http/controllers/${controllerName}`));
                 const constructorName = Object.keys(controller)[0];

@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
+const pluralize = require("pluralize");
 const ControllerResolver_1 = require("./ControllerResolver/ControllerResolver");
 // export type Crud = {
 //   index(req: Request, res: Response): void
@@ -25,7 +26,7 @@ class FoxStormRouter {
         'post': { action: 'create', route: `/%model%` },
         'put': { action: 'update', route: `/%model%/:id` },
         'delete': { action: 'delete', route: `/%model%/:id` }
-    }, controllerResolver = new ControllerResolver_1.ControllerResolver(Object.keys(routerCrudMap).map(key => routerCrudMap[key].action))) {
+    }, controllerResolver = new ControllerResolver_1.ControllerResolver(pluralize, Object.keys(routerCrudMap).map(key => routerCrudMap[key].action))) {
         this.logger = logger;
         this.router = router;
         this.routerCrudMap = routerCrudMap;
@@ -59,18 +60,17 @@ class FoxStormRouter {
     }
     resource(model) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (typeof model !== 'function') {
+                throw new Error('Model has to be a valid class');
+            }
             try {
-                const controllerInstance = yield this.controllerResolver.retrieveControllerInstanceFromModel(model);
+                const controllerInstance = yield this.controllerResolver.retrieveControllerInstanceFromModelName(model.name);
                 const modelName = model.name.toLowerCase();
                 for (const method in this.routerCrudMap) {
                     const config = this.routerCrudMap[method];
                     this.router[method](config.route.replace('%model%', modelName), controllerInstance[config.action]);
                     this.logger(`-- Registered ${method.toUpperCase()} route ${config.route.replace('%model%', modelName)}`);
                 }
-                // this.router.get(`/${modelName}`, controllerInstance.index)
-                // this.router.post(`/${modelName}`, controllerInstance.create)
-                // this.router.put(`/${modelName}/:id`, controllerInstance.update)
-                // this.router.delete(`/${modelName}/:id`, controllerInstance.delete)
             }
             catch (error) {
                 throw error;

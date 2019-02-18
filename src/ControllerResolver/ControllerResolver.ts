@@ -5,7 +5,7 @@ import { Response } from '../Response'
 import { Request } from '../Request'
 
 export class ControllerResolver implements ControllerResolvable {
-  constructor (readonly crudActions: string[]) {}
+  constructor (readonly pluralise: any, readonly crudActions: string[]) {}
 
   retrieveAction (controller: (req: Request, res: Response) => void | InvokableController): (req: Request, res: Response) => void {
     if (typeof controller === 'function') {
@@ -20,13 +20,8 @@ export class ControllerResolver implements ControllerResolvable {
     throw new RoutingError('Invalid route', 'Invalid Controller or Controller action passed')
   }
 
-  async retrieveControllerInstanceFromModel<T> (model: new () => T): Promise<any> {
-    if (typeof model !== 'function') {
-      throw new Error('Model has to be a valid class')
-    }
-
-    const modelName = model.name
-    const controllerName = `${modelName}sController`
+  async retrieveControllerInstanceFromModelName (modelName: string): Promise<any> {
+    const controllerName = `${this.pluralise(modelName)}Controller`
 
     try {
       const controller: any = await import(`${process.cwd()}/http/controllers/${controllerName}`)
